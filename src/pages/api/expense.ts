@@ -1,3 +1,6 @@
+// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+import type { NextApiRequest, NextApiResponse } from 'next'
+
 interface ExpenseType {
   id: number
   item: string
@@ -32,19 +35,6 @@ const expenses: ExpenseType[] = [
   },
 ]
 
-export async function getStaticProps() {
-  return {
-    props: { expenses },
-  }
-}
-
-export default function Home({ expenses }: { expenses: ExpenseType[] }) {
-  return (
-    <ul>
-      {expenses.map((expense) => {
-        const { id, item } = expense
-        return <li key={id}>{item}</li>
-      })}
-    </ul>
-  )
+export default function handler(req: NextApiRequest, res: NextApiResponse<ExpenseType[]>) {
+  res.status(200).json(expenses)
 }
